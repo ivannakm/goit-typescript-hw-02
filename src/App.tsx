@@ -5,21 +5,21 @@ import Loader from "./components/Loader/Loader";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-
 import { getImages } from "./apiService/unsplash";
 import ImageModal from "./components/ImageModal /ImageModal";
+import { ImageItem, UnsplashImage } from "./types";
 
 function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   //  Функція для пошуку зображень
-  const handleSearch = async (newQuery) => {
+  const handleSearch = async (newQuery: string): Promise<void> => {
     setQuery(newQuery);
     setPage(1);
     setLoading(true);
@@ -34,7 +34,7 @@ function App() {
     }
   };
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = async (): Promise<void> => {
     const nextPage = page + 1;
     setLoading(true);
     try {
@@ -48,7 +48,7 @@ function App() {
     }
   };
 
-  const formatImages = (results) =>
+  const formatImages = (results: UnsplashImage[]): ImageItem[] =>
     results.map((img) => ({
       id: img.id,
       url: img.urls.small,
@@ -56,15 +56,15 @@ function App() {
       fullUrl: img.urls.regular,
       author: img.user.name,
       likes: img.likes,
-      description: img.description || img.alt_description,
+      description: img.description || img.alt_description || "No description",
     }));
 
-  const openModal = (imageData) => {
+  const openModal = (imageData: ImageItem) => {
     setSelectedImage(imageData);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsModalOpen(false);
     setSelectedImage(null);
   };
