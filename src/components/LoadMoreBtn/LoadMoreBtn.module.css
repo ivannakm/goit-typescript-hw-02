@@ -1,0 +1,24 @@
+.loadMoreBtn {
+  display: block;
+  margin: 40px auto 40px;
+  padding: 15px 30px;
+
+  background-color: #87ceeb;
+  color: #fff0f5;
+
+  border: none;
+  border-radius: 6px;
+
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loadMoreBtn:hover,
+.loadMoreBtn:focus {
+  box-shadow: 0 4px 6px rgba(173, 216, 230, 0.6);
+  outline: none;
+}
