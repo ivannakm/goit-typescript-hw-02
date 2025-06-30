@@ -7,7 +7,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import { getImages } from "./apiService/unsplash";
 import ImageModal from "./components/ImageModal /ImageModal";
-import { ImageItem, UnsplashImage } from "./types";
+import { ImageItem, UnsplashImage, UnsplashResponse } from "./types";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -25,7 +25,7 @@ function App() {
     setLoading(true);
     setError("");
     try {
-      const data = await getImages(newQuery, 1);
+      const data: UnsplashResponse = await getImages(newQuery, 1);
       setImages(formatImages(data.results));
     } catch {
       setError("Failed to load images.");
@@ -38,7 +38,7 @@ function App() {
     const nextPage = page + 1;
     setLoading(true);
     try {
-      const data = await getImages(query, nextPage);
+      const data: UnsplashResponse = await getImages(query, nextPage);
       setImages((prev) => [...prev, ...formatImages(data.results)]);
       setPage(nextPage);
     } catch {
